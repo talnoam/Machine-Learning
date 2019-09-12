@@ -174,5 +174,24 @@ class JetNodeClassifier(nn.Module):
 
 
 
+class JetNodeMultiClassifier(nn.Module):
+	def __init__(self,jet_feature_size=2,node_feature_size=6,hidden_size=128,n_classes=6):
+		super(JetNodeMultiClassifier,self).__init__()
+		
+		self.node_classifiers = nn.ModuleList()
+		
+		for i in range(n_classes):
+			self.node_classifiers.append(JetNodeClassifier(jet_feature_size,node_feature_size,hidden_size,2) )
+
+		
+	def forward(self,jet_features,g,node_features):
+		
+		class_outputs = []
+		for classifier in self.node_classifiers:
+			n_class = classifier(jet_features,g,node_features)
+
+
+		
+		return node_class
 
 
